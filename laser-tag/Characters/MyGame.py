@@ -11,7 +11,7 @@ class MyClass(arcade.Window):
     '''
     classdocs
     '''
-    SPRITE_SCALING = 0.1
+    SPRITE_SCALING = 0.025
     MOVEMENT_SPEED = 3
 
 
