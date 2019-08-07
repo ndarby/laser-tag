@@ -1,0 +1,1 @@
+automapping_rules/rule1.tmx
