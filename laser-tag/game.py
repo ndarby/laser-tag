@@ -16,7 +16,7 @@ class Game(arcade.Window):
     mapcount = 1
     background = arcade.color.BLACK
     viewportMargin = 300
-    movementSpeed = 3
+    movementSpeed = 1
 
 
     def __init__(self, width = 1440, height = 900, title = 'Game', fullScreen = True):
@@ -67,12 +67,28 @@ class Game(arcade.Window):
         
         if self.upPressed and not self.downPressed:
             self.playerSprite.change_y = self.movementSpeed
+            self.playerSprite.change_x = self.movementSpeed
         elif self.downPressed and not self.upPressed:
             self.playerSprite.change_y = -self.movementSpeed
+            self.playerSprite.change_x = -self.movementSpeed
         if self.leftPressed and not self.rightPressed:
             self.playerSprite.change_x = -self.movementSpeed
+            self.playerSprite.change_y = self.movementSpeed
         elif self.rightPressed and not self.leftPressed:
             self.playerSprite.change_x = self.movementSpeed
+            self.playerSprite.change_y = -self.movementSpeed
+        if self.leftPressed and self.upPressed:
+            self.playerSprite.change_x = 0
+            self.playerSprite.change_y = self.movementSpeed
+        elif self.rightPressed and self.upPressed:
+            self.playerSprite.change_x = self.movementSpeed
+            self.playerSprite.change_y = 0
+        if self.downPressed and self.rightPressed:
+            self.playerSprite.change_x = 0
+            self.playerSprite.change_y = -self.movementSpeed
+        elif self.downPressed and self.leftPressed:
+            self.playerSprite.change_x = -self.movementSpeed
+            self.playerSprite.change_y = 0
             
         self.playerList.update()
     
