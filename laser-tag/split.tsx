@@ -277,12 +277,12 @@
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_080.png"/>
  </tile>
  <tile id="80">
-  <image width="64" height="32" source="../../../../Desktop/markers/marker1.png"/>
+  <image width="64" height="32" source="markers/marker1.png"/>
  </tile>
  <tile id="81">
-  <image width="64" height="32" source="../../../../Desktop/markers/marker2.png"/>
+  <image width="64" height="32" source="markers/marker2.png"/>
  </tile>
  <tile id="82">
-  <image width="64" height="32" source="../../../../Desktop/markers/marker3.png"/>
+  <image width="64" height="32" source="markers/marker3.png"/>
  </tile>
 </tileset>
