@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="2019.06.20" name="split" tilewidth="64" tileheight="64" tilecount="80" columns="0">
+<tileset version="1.2" tiledversion="2019.06.20" name="split" tilewidth="64" tileheight="64" tilecount="83" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_001.png"/>
+  <objectgroup draworder="index">
+   <object id="1" x="31.4809" y="-0.18197">
+    <polygon points="0,0 -31.2989,15.6495 -31.4809,48.95 0.545911,64.2355 32.5727,48.4041 32.4559,16.4601"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="1">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_002.png"/>
+  <objectgroup draworder="index">
+   <object id="2" x="-0.137912" y="15.8599">
+    <polygon points="0,0 0,33.0989 32.2714,48.8209 64.4049,32.6851 64.1291,0.275824 32.2714,-16.4115"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="2">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_003.png"/>
@@ -33,6 +43,11 @@
  </tile>
  <tile id="10">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_011.png"/>
+  <objectgroup draworder="index">
+   <object id="1" x="0" y="23.9967">
+    <polygon points="0,0 31.7198,-16.6874 64.1291,-0.413736 64.1291,24.8242 32.1335,40.5461 0,24.6863"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="11">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_012.png"/>
@@ -63,6 +78,11 @@
  </tile>
  <tile id="20">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_021.png"/>
+  <objectgroup draworder="index">
+   <object id="1" x="-0.413736" y="31.8577">
+    <polygon points="0,0 0.137912,16.9632 32.2714,32.4093 64.4049,16.6874 64.4049,0.137912 32.1335,-16.6874"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="21">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_022.png"/>
@@ -156,12 +176,27 @@
  </tile>
  <tile id="51">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_052.png"/>
+  <objectgroup draworder="index">
+   <object id="2" x="-0.827472" y="33.7884">
+    <polygon points="0,0 32.8231,-17.9286 66.1978,-0.827472 33.3747,16.6874"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="52">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_053.png"/>
+  <objectgroup draworder="index">
+   <object id="1" x="20.6868" y="40.2703">
+    <polygon points="0,0 5.24066,4.5511 8.96428,5.93022 15.3082,5.65439 21.3764,1.37912 22.3417,-0.827472 21.928,-3.86154 17.239,-6.75769 11.7225,-7.58516 4.13736,-6.48186 0.413736,-3.30989"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="53">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_054.png"/>
+  <objectgroup draworder="index">
+   <object id="1" x="18.8939" y="39.167">
+    <polygon points="0,0 1.37912,4.82692 9.2401,8.82637 16.9632,8.68846 22.2038,7.03351 25.2379,3.72362 26.3412,0.827472 25.1,-2.48242 17.1011,-6.48186 9.51593,-6.34395 3.99945,-4.27527"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="54">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_055.png"/>
@@ -240,5 +275,14 @@
  </tile>
  <tile id="79">
   <image width="64" height="64" source="cut_images_L2o48C9baeZANFQ/image_part_080.png"/>
+ </tile>
+ <tile id="80">
+  <image width="64" height="32" source="markers/marker1.png"/>
+ </tile>
+ <tile id="81">
+  <image width="64" height="32" source="markers/marker2.png"/>
+ </tile>
+ <tile id="82">
+  <image width="64" height="32" source="markers/marker3.png"/>
  </tile>
 </tileset>
