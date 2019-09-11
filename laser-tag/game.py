@@ -67,6 +67,8 @@ class Game(arcade.Window):
     viewportMargin = 300
     movementSpeed = 4
     levelCount = 3
+    N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
+    keyToDir = {0:None, 1:6, 2:2, 3:None, 4:4, 5:5, 6:3, 7:4, 8:0, 9:7, 10:1, 11:0, 12:None, 13:6, 14:2, 15:None}
 
 
     def __init__(self, width = 1440, height = 900, title = 'Game', fullScreen = True):
@@ -91,6 +93,8 @@ class Game(arcade.Window):
         self.downPressed = False
         
         self.physicsEngine = None
+        
+        self.directionKey = 0
         
         self.viewLeft, self.viewBottom = 0, 0
         
@@ -120,35 +124,12 @@ class Game(arcade.Window):
         self.levels[self.currentLevel].draw()
         self.playerList.draw()
     
-    def update(self, delta_time):
-        self.playerSprite.change_x, self.playerSprite.change_y = 0, 0
+    def update(self, delta_time):        
+        self.playerSprite.isoDirection = self.keyToDir[self.directionKey]
         
-        if self.upPressed and not self.downPressed:
-            self.playerSprite.change_y = self.movementSpeed
-            self.playerSprite.change_x = self.movementSpeed
-        elif self.downPressed and not self.upPressed:
-            self.playerSprite.change_y = -self.movementSpeed
-            self.playerSprite.change_x = -self.movementSpeed
-        if self.leftPressed and not self.rightPressed:
-            self.playerSprite.change_x = -self.movementSpeed
-            self.playerSprite.change_y = self.movementSpeed
-        elif self.rightPressed and not self.leftPressed:
-            self.playerSprite.change_x = self.movementSpeed
-            self.playerSprite.change_y = -self.movementSpeed
-        if self.leftPressed and self.upPressed:
-            self.playerSprite.change_x = 0
-            self.playerSprite.change_y = self.movementSpeed
-        elif self.rightPressed and self.upPressed:
-            self.playerSprite.change_x = self.movementSpeed
-            self.playerSprite.change_y = 0
-        if self.downPressed and self.rightPressed:
-            self.playerSprite.change_x = 0
-            self.playerSprite.change_y = -self.movementSpeed
-        elif self.downPressed and self.leftPressed:
-            self.playerSprite.change_x = -self.movementSpeed
-            self.playerSprite.change_y = 0
-            
+        self.playerList.update()
         self.physicsEngine.update()
+        
         
         # Check stairs
         if self.levels[self.currentLevel].upstairs:
@@ -201,23 +182,23 @@ class Game(arcade.Window):
             self.close()
             
         if key == arcade.key.UP:
-            self.upPressed = True
+            self.directionKey += 8
         if key == arcade.key.DOWN:
-            self.downPressed = True
-        if key == arcade.key.LEFT:
-            self.leftPressed = True
+            self.directionKey += 4
         if key == arcade.key.RIGHT:
-            self.rightPressed = True
+            self.directionKey += 2
+        if key == arcade.key.LEFT:
+            self.directionKey += 1
     
     def on_key_release(self, key, modifiers:int):
         if key == arcade.key.UP:
-            self.upPressed = False
+            self.directionKey -= 8
         elif key == arcade.key.DOWN:
-            self.downPressed = False
-        elif key == arcade.key.LEFT:
-            self.leftPressed = False
+            self.directionKey -= 4
         elif key == arcade.key.RIGHT:
-            self.rightPressed = False
+            self.directionKey -= 2
+        elif key == arcade.key.LEFT:
+            self.directionKey -= 1
     
     def on_mouse_motion(self, x:float, y:float, dx:float, dy:float):
         pass
