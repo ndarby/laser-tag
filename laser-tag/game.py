@@ -47,12 +47,6 @@ class Level:
             self.upstairs.draw()
         if self.furniture:
             self.furniture.draw()
-        
-    
-    def postDraw(self):
-        'currently not used, probably unnecessary'
-        pass
-        
     
     def update(self):
         pass
@@ -68,7 +62,12 @@ class Game(arcade.Window):
     movementSpeed = 4
     levelCount = 3
     N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
-    keyToDir = {0:None, 1:6, 2:2, 3:None, 4:4, 5:5, 6:3, 7:4, 8:0, 9:7, 10:1, 11:0, 12:None, 13:6, 14:2, 15:None}
+    keyToDir = {
+                0:None, 1:W, 2:E, 3:None,
+                4:S, 5:SW, 6:SE, 7:S, 8:N,
+                9:NW, 10:NE, 11:N, 12:None,
+                13:W, 14:E, 15:None
+                }
 
 
     def __init__(self, width = 1440, height = 900, title = 'Game', fullScreen = True):
@@ -78,8 +77,7 @@ class Game(arcade.Window):
         super().__init__(width, height, title, fullscreen=fullScreen)
         self.mapList = None
         #change later
-        self.mapList = [Map('map1.tmx')]   
-        #
+        self.mapList = [Map('map1.tmx')]
         self.playerSprite = None
         
         self.currentMap = None
@@ -126,6 +124,10 @@ class Game(arcade.Window):
     
     def update(self, delta_time):        
         self.playerSprite.isoDirection = self.keyToDir[self.directionKey]
+        if self.directionKey == 0:
+            self.playerSprite.moving = False
+        else:
+            self.playerSprite.moving = True
         
         self.playerList.update()
         self.physicsEngine.update()
@@ -177,8 +179,8 @@ class Game(arcade.Window):
                                 self.viewBottom,
                                 self.height + self.viewBottom)
     
-    def on_key_press(self, key, modifiers:int):
-        if key == arcade.key.ESCAPE or key == arcade.key.Q and modifiers in (arcade.key.LCOMMAND, arcade.key.RCOMMAND):
+    def on_key_press(self, key, modifiers):
+        if key == arcade.key.ESCAPE:
             self.close()
             
         if key == arcade.key.UP:
@@ -190,7 +192,7 @@ class Game(arcade.Window):
         if key == arcade.key.LEFT:
             self.directionKey += 1
     
-    def on_key_release(self, key, modifiers:int):
+    def on_key_release(self, key, modifiers):
         if key == arcade.key.UP:
             self.directionKey -= 8
         elif key == arcade.key.DOWN:

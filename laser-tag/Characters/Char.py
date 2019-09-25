@@ -11,8 +11,9 @@ class Player(arcade.Sprite):
     classdocs
     '''
     #constants
-    scaling = 0.4
+    scaling = 1.3
     movementSpeed = 4
+    stepSpeed = 16
     N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
     isoXScale = 2 / 5**0.5
     isoYScale = 1 / 5**0.5
@@ -46,7 +47,13 @@ class Player(arcade.Sprite):
                 self.change_x = -self.movementSpeed
                 self.change_y = 0
         
-            self.set_texture(self.isoDirection)
+            imgTypeIndex = 0
+            if self.moving:
+                self.movUpdateCount += 1
+                imgTypeIndex = self.movUpdateCount%self.stepSpeed//(self.stepSpeed//2)
+            else:
+                self.movUpdateCount = 0
+            self.set_texture(3*self.isoDirection + imgTypeIndex)
             
         
     
@@ -57,26 +64,16 @@ class Player(arcade.Sprite):
         '''
         super().__init__()
         
-        texture = arcade.load_texture("Characters/sprite-N.png", scale = self.scaling)
-        self.textures.append(texture)
-        texture = arcade.load_texture("Characters/sprite-NE.png", scale = self.scaling)
-        self.textures.append(texture)
-        texture = arcade.load_texture("Characters/sprite-E.png", scale = self.scaling)
-        self.textures.append(texture)
-        texture = arcade.load_texture("Characters/sprite-SE.png", scale = self.scaling)
-        self.textures.append(texture)
-        texture = arcade.load_texture("Characters/sprite-S.png", scale = self.scaling)
-        self.textures.append(texture)
-        texture = arcade.load_texture("Characters/sprite-SW.png", scale = self.scaling)
-        self.textures.append(texture)
-        texture = arcade.load_texture("Characters/sprite-W.png", scale = self.scaling)
-        self.textures.append(texture)
-        texture = arcade.load_texture("Characters/sprite-NW.png", scale = self.scaling)
-        self.textures.append(texture)
-        
+        for direction in ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']:
+            for picture in ['stand', 'walk1', 'walk2']:
+                texture = arcade.load_texture(f"Characters/player_imgs/sprite_{direction}_{picture}.png", scale=self.scaling)
+                self.textures.append(texture)
+                        
         self.set_texture(0)
         self.center_x = x
         self.center_y = y
         self.isoDirection = None
+        self.moving = False
+        self.movUpdateCount = 0
             
         
