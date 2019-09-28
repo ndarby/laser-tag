@@ -6,13 +6,13 @@ Created on Jul. 16, 2019
 
 import arcade
 
-class Player(arcade.Sprite):
+class Character(arcade.Sprite):
     '''
     classdocs
     '''
     #constants
     scaling = 1.3
-    movementSpeed = 4
+    movementSpeed = 3.2
     stepSpeed = 16
     N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
     isoXScale = 2 / 5**0.5
@@ -58,7 +58,7 @@ class Player(arcade.Sprite):
         
     
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, imgSrc):
         '''
         Constructor
         '''
@@ -66,7 +66,7 @@ class Player(arcade.Sprite):
         
         for direction in ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']:
             for picture in ['stand', 'walk1', 'walk2']:
-                texture = arcade.load_texture(f"Characters/player_imgs/sprite_{direction}_{picture}.png", scale=self.scaling)
+                texture = arcade.load_texture(f"Characters/{imgSrc}/sprite_{direction}_{picture}.png", scale=self.scaling)
                 self.textures.append(texture)
                         
         self.set_texture(0)
