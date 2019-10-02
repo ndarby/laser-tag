@@ -6,7 +6,7 @@ Created on Sep. 26, 2019
 from Characters.Char import Character
 
 def spriteDistance(spriteA, spriteB):
-    pass
+    return ((spriteA.center_x - spriteB.center_x)**2 + (spriteA.center_y - spriteB.center_y)**2)**0.5
 
 class NPC(Character):
     '''

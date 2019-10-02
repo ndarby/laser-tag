@@ -5,6 +5,7 @@ Created on Jul. 16, 2019
 '''
 
 import arcade
+from Objects.LaserBeam import LaserBeam
 
 class Character(arcade.Sprite):
     '''
@@ -20,6 +21,8 @@ class Character(arcade.Sprite):
 
     def update(self):
         self.change_x, self.change_y = 0, 0
+        for laser in self.lasers:
+            laser.update()
         
         if self.isoDirection != None:
             if self.isoDirection == self.N:
@@ -53,7 +56,10 @@ class Character(arcade.Sprite):
                 imgTypeIndex = self.movUpdateCount%self.stepSpeed//(self.stepSpeed//2)
             else:
                 self.movUpdateCount = 0
-            self.set_texture(3*self.isoDirection + imgTypeIndex)
+            if self.shootDirection:
+                self.set_texture(3*self.shootDirection + imgTypeIndex)
+            else:
+                self.set_texture(3*self.isoDirection + imgTypeIndex)
             
         
     
@@ -72,8 +78,19 @@ class Character(arcade.Sprite):
         self.set_texture(0)
         self.center_x = x
         self.center_y = y
-        self.isoDirection = None
+        self.isoDirection = self.N
         self.moving = False
         self.movUpdateCount = 0
-            
+        self.shootDirection = None
+        self.lasers = []
+        self.target = 0
+    
+    def shoot(self):
+        self.lasers.append(LaserBeam(self.center_x, self.center_y, self.target.center_x, self.target.center_y))
+    
+    #def draw(self):
+     #   super().draw()
+      #  for laser in self.lasers:
+       #     laser.draw()
+        
         

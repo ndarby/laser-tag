@@ -7,6 +7,7 @@ Created on Jul. 16, 2019
 import arcade
 from Maps.map import Map
 from Characters.Player import Player
+from Characters.NPC import spriteDistance
 from Maps.level import Level
 
 class Game(arcade.Window):
@@ -146,6 +147,22 @@ class Game(arcade.Window):
                 self._changeLevel(-1)
         
         self._scrollUpdate()
+        self._searchTarget()
+    
+    def _searchTarget(self):
+        closest = None
+        minDistance = None
+        for char in self.characterList:
+            if char != self.playerSprite:
+                distance = spriteDistance(self.playerSprite, char)
+                if closest and minDistance:
+                    if distance < minDistance:
+                        minDistance = distance
+                        closest = char
+                else:
+                    minDistance = distance
+                    closest = char
+        self.playerSprite.target = closest
     
     def on_key_press(self, key, modifiers):
         if key == arcade.key.ESCAPE:
@@ -159,6 +176,9 @@ class Game(arcade.Window):
             self.directionKey += 2
         if key == arcade.key.LEFT:
             self.directionKey += 1
+        
+        if key == arcade.key.SPACE:
+            self.playerSprite.shoot()
     
     def on_key_release(self, key, modifiers):
         if key == arcade.key.UP:
