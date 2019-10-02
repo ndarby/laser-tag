@@ -136,8 +136,7 @@ class Game(arcade.Window):
         
         self.characterList.update()
         self.physicsEngine.update()
-        
-        
+              
         # Check stairs
         if self.levels[self.currentLevel].upstairs:
             if arcade.check_for_collision_with_list(self.playerSprite, self.levels[self.currentLevel].upstairs):
