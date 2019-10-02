@@ -42,6 +42,7 @@ class Game(arcade.Window):
         self.currentLevel = 0
         self.levels = []
         self.characterList = None
+        self.enemyList = None
         
         self.leftPressed = False
         self.rightPressed = False
