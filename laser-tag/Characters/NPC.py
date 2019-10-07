@@ -13,7 +13,7 @@ class NPC(Character):
     classdocs
     '''
     followDistance = 20
-    turn = 5
+    turn = 80
     movementSpeed = 1
     
     def __init__(self, x, y, imgSrc):
@@ -29,26 +29,25 @@ class NPC(Character):
         if self.leader and spriteDistance(self, self.leader) > self.followDistance:
             self.follow()
         else:
-            self.walkCount +=1
-            self.wander()
-            super().update()
-            self.center_x += self.change_x
-            self.center_y += self.change_y
-            
+            self.wander()            
 
-        #super().update()
+        super().update()
     
     def wander(self):
+        self.walkCount += 1
         if self.walkCount > self.turn:
             self.walkCount = 0
             if self.isoDirection == self.N:
                 self.isoDirection = self.E
-            if self.isoDirection == self.E:
+            elif self.isoDirection == self.E:
                 self.isoDirection = self.S
-            if self.isoDirection == self.S:
+            elif self.isoDirection == self.S:
                 self.isoDirection = self.W
-            if self.isoDirection == self.W:
-                self.isoDirection = self.N                
+            elif self.isoDirection == self.W:
+                self.isoDirection = self.N  
+                
+        self.center_x += self.change_x
+        self.center_y += self.change_y              
                 
     
     def follow(self):
