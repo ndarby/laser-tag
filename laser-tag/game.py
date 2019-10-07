@@ -54,6 +54,7 @@ class Game(arcade.Window):
         self.directionKey = 0
         
         self.viewLeft, self.viewBottom = 0, 0
+        self.lasers = []
         
         arcade.set_background_color(self.background)        
         
@@ -79,6 +80,8 @@ class Game(arcade.Window):
         arcade.start_render()
         self.levels[self.currentLevel].draw()
         self.characterList.draw()
+        for laser in self.lasers:
+            laser.draw()
     
     def _changeLevel(self, dLevel):
         assert dLevel in (1, -1)
@@ -129,11 +132,13 @@ class Game(arcade.Window):
                                 self.height + self.viewBottom)
                 
     def update(self, delta_time):
+        self._scrollUpdate()        
         self.playerSprite.isoDirection = self.keyToDir[self.directionKey]
         if self.directionKey == 0:
             self.playerSprite.moving = False
         else:
             self.playerSprite.moving = True
+            self._searchTarget()
         
         self.characterList.update()
         self.physicsEngine.update()
@@ -146,14 +151,13 @@ class Game(arcade.Window):
             if arcade.check_for_collision_with_list(self.playerSprite, self.levels[self.currentLevel].downstairs):
                 self._changeLevel(-1)
         
-        self._scrollUpdate()
-        self._searchTarget()
+
     
     def _searchTarget(self):
         closest = None
         minDistance = None
         for char in self.characterList:
-            if char != self.playerSprite:
+            if char != self.playerSprite and char:
                 distance = spriteDistance(self.playerSprite, char)
                 if closest and minDistance:
                     if distance < minDistance:
@@ -179,6 +183,7 @@ class Game(arcade.Window):
         
         if key == arcade.key.SPACE:
             self.playerSprite.shoot()
+            self.lasers = self.playerSprite.lasers
     
     def on_key_release(self, key, modifiers):
         if key == arcade.key.UP:

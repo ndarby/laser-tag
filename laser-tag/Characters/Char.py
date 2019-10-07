@@ -83,14 +83,9 @@ class Character(arcade.Sprite):
         self.movUpdateCount = 0
         self.shootDirection = None
         self.lasers = []
-        self.target = 0
+        self.target = None
     
     def shoot(self):
         self.lasers.append(LaserBeam(self.center_x, self.center_y, self.target.center_x, self.target.center_y))
-    
-    #def draw(self):
-     #   super().draw()
-      #  for laser in self.lasers:
-       #     laser.draw()
         
         
