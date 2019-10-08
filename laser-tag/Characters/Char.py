@@ -9,7 +9,7 @@ from Objects.LaserBeam import LaserBeam
 
 class Character(arcade.Sprite):
     '''
-    classdocs
+    the base class for the player and NPCs
     '''
     #constants
     scaling = 1.3

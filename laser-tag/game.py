@@ -12,7 +12,7 @@ from Maps.level import Level
 
 class Game(arcade.Window):
     '''
-    classdocs
+    top level class for the game
     '''
     #constants
     mapcount = 1
@@ -59,7 +59,9 @@ class Game(arcade.Window):
         arcade.set_background_color(self.background)        
         
     def setup(self):
-        
+        '''
+        sets up the game
+        '''
         self.currentMap = self.mapList[0].getSpriteLists()
         
         for i in range(self.levelCount):
@@ -77,13 +79,21 @@ class Game(arcade.Window):
         
     
     def on_draw(self):
+        '''
+        draws the game elements
+        '''
         arcade.start_render()
         self.levels[self.currentLevel].draw()
-        self.characterList.draw()
         for laser in self.lasers:
             laser.draw()
+        self.characterList.draw()
+        
     
     def _changeLevel(self, dLevel):
+        '''
+        called when going up or down stairs. dLevel is -1 for going down, +1 for going up.
+        changes the current level and game character list appropriately
+        '''
         assert dLevel in (1, -1)
         #remove the player form the current level's list of characters before changing level
         self.levels[self.currentLevel].characters.remove(self.playerSprite)
@@ -99,27 +109,30 @@ class Game(arcade.Window):
         self.characterList.append(self.playerSprite)
         
     def _scrollUpdate(self):
+        '''
+        manages screen scrolling
+        '''
         changed = False
 
-        # Scroll left
+        # check scroll left
         left_bndry = self.viewLeft + self.viewportMargin
         if self.playerSprite.left < left_bndry:
             self.viewLeft -= left_bndry - self.playerSprite.left
             changed = True
 
-        # Scroll right
+        # check scroll right
         right_bndry = self.viewLeft + self.width - self.viewportMargin
         if self.playerSprite.right > right_bndry:
             self.viewLeft += self.playerSprite.right - right_bndry
             changed = True
 
-        # Scroll up
+        # check scroll up
         top_bndry = self.viewBottom + self.height - self.viewportMargin
         if self.playerSprite.top > top_bndry:
             self.viewBottom += self.playerSprite.top - top_bndry
             changed = True
 
-        # Scroll down
+        # check scroll down
         bottom_bndry = self.viewBottom + self.viewportMargin
         if self.playerSprite.bottom < bottom_bndry:
             self.viewBottom -= bottom_bndry - self.playerSprite.bottom
@@ -132,6 +145,9 @@ class Game(arcade.Window):
                                 self.height + self.viewBottom)
                 
     def update(self, delta_time):
+        '''
+        updates the character list, physics engine, and checks for going up or down stairs
+        '''
         self._scrollUpdate()        
         self.playerSprite.isoDirection = self.keyToDir[self.directionKey]
         if self.directionKey == 0:
@@ -169,6 +185,13 @@ class Game(arcade.Window):
         self.playerSprite.target = closest
     
     def on_key_press(self, key, modifiers):
+        '''
+        implements actions associated with key press
+        close on esc
+        set the direction key using binary encoding on direction keys
+        binary encoding is (A3)(A2)(A1)(A0) = (UP)(DOWN)(RIGHT)(LEFT)
+        player shoots on space
+        '''
         if key == arcade.key.ESCAPE:
             self.close()
             
@@ -186,6 +209,9 @@ class Game(arcade.Window):
             self.lasers = self.playerSprite.lasers
     
     def on_key_release(self, key, modifiers):
+        '''
+        updates the direction key binary encoding
+        '''
         if key == arcade.key.UP:
             self.directionKey -= 8
         elif key == arcade.key.DOWN:

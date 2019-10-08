@@ -11,8 +11,9 @@ class LaserBeam():
     '''
     speed = 10
     length = 20
+    width = 3
 
-    def __init__(self, x, y, targetX, targetY, color=arcade.color.WHITE):
+    def __init__(self, x, y, targetX, targetY, color=arcade.color.RED):
         '''
         Constructor
         '''
@@ -31,4 +32,4 @@ class LaserBeam():
     def draw(self):
         ratio = self.length/self.speed
         arcade.draw_line(self.center_x, self.center_y, self.center_x + self.change_x*ratio,
-                         self.center_y + self.change_y*ratio, self.color, line_width=5)
+                         self.center_y + self.change_y*ratio, self.color, line_width=self.width)
