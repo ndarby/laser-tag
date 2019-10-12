@@ -44,10 +44,7 @@ class NPC(Character):
             elif self.isoDirection == self.S:
                 self.isoDirection = self.W
             elif self.isoDirection == self.W:
-                self.isoDirection = self.N  
-                
-        self.center_x += self.change_x
-        self.center_y += self.change_y              
+                self.isoDirection = self.N                
                 
     
     def follow(self):

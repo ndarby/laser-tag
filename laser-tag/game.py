@@ -8,6 +8,7 @@ import arcade
 from Maps.map import Map
 from Characters.Player import Player
 from Maps.level import Level
+from PhysicsEngine import PhysicsEngine
 
 class Game(arcade.Window):
     '''
@@ -72,7 +73,7 @@ class Game(arcade.Window):
         self.playerSprite = Player(startX, startY, 'player_imgs')
         self.characterList = self.levels[0].characters
         self.characterList.append(self.playerSprite)
-        self.physicsEngine = arcade.PhysicsEngineSimple(self.playerSprite, self.levels[self.currentLevel].noWalk)
+        self.physicsEngine = PhysicsEngine(self.characterList, self.levels[self.currentLevel].noWalk)
         
     
     def on_draw(self):
@@ -94,6 +95,7 @@ class Game(arcade.Window):
             self.playerSprite.center_y = self.levels[self.currentLevel].startUpY
         self.characterList = self.levels[self.currentLevel].characters
         self.characterList.append(self.playerSprite)
+        self.physicsEngine.characters = self.characterList
         
     def _scrollUpdate(self):
         changed = False
