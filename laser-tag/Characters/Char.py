@@ -18,8 +18,12 @@ class Character(arcade.Sprite):
     N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
     isoXScale = 2 / 5**0.5
     isoYScale = 1 / 5**0.5
-
+    keyToDir = {0:None, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None} #fix later
+    
     def update(self):
+        '''
+        duh
+        '''
         self.change_x, self.change_y = 0, 0
         for laser in self.lasers:
             laser.update()
@@ -61,9 +65,6 @@ class Character(arcade.Sprite):
             else:
                 self.set_texture(3*self.isoDirection + imgTypeIndex)
             
-        
-    
-
     def __init__(self, x, y, imgSrc):
         '''
         Constructor
@@ -86,6 +87,30 @@ class Character(arcade.Sprite):
         self.target = None
     
     def shoot(self):
-        self.lasers.append(LaserBeam(self.center_x, self.center_y, self.target.center_x, self.target.center_y))
+        '''
+        Creates a laser headed in the direction of the target,
+        also turns to face target.
+        Should not be called if there is no target.
+        '''
+        laser = LaserBeam(self.center_x, self.center_y, self.target.center_x, self.target.center_y, arcade.color.RED, self)
+        self.lasers.append(laser)
         
+        #manage turning toward target
+        yDist = self.center_y - self.target.center_y
+        xDist = self.center_x - self.target.center_x
+        above = yDist < 0
+        right = xDist < 0
+        iso = 1 < yDist / xDist < 1
+        #binary (right)(above)(iso)
+        key = 0
+        if right:
+            key += 4
+        if above:
+            key += 2
+        if iso:
+            key += 1
+        
+        self.shootDirection = self.keyToDir[key]
+        
+        return laser
         

@@ -76,8 +76,7 @@ class Game(arcade.Window):
         self.characterList = self.levels[0].characters
         self.characterList.append(self.playerSprite)
         self.physicsEngine = arcade.PhysicsEngineSimple(self.playerSprite, self.levels[self.currentLevel].noWalk)
-        
-    
+           
     def on_draw(self):
         '''
         draws the game elements
@@ -87,14 +86,18 @@ class Game(arcade.Window):
         for laser in self.lasers:
             laser.draw()
         self.characterList.draw()
-        
-    
+        if self.playerSprite.target:
+            arcade.draw_circle_outline(self.playerSprite.target.center_x, self.playerSprite.target.center_y, 35, arcade.color.LIME_GREEN, 4)
+            
     def _changeLevel(self, dLevel):
         '''
         called when going up or down stairs. dLevel is -1 for going down, +1 for going up.
         changes the current level and game character list appropriately
         '''
         assert dLevel in (1, -1)
+        #clear lasers
+        for laser in self.lasers:
+            self.lasers.remove(laser)
         #remove the player form the current level's list of characters before changing level
         self.levels[self.currentLevel].characters.remove(self.playerSprite)
         self.currentLevel += dLevel
@@ -158,6 +161,7 @@ class Game(arcade.Window):
         
         self.characterList.update()
         self.physicsEngine.update()
+        self._manageLasers()
               
         # Check stairs
         if self.levels[self.currentLevel].upstairs:
@@ -166,9 +170,7 @@ class Game(arcade.Window):
         if self.levels[self.currentLevel].downstairs:
             if arcade.check_for_collision_with_list(self.playerSprite, self.levels[self.currentLevel].downstairs):
                 self._changeLevel(-1)
-        
-
-    
+            
     def _searchTarget(self):
         closest = None
         minDistance = None
@@ -204,13 +206,12 @@ class Game(arcade.Window):
         if key == arcade.key.LEFT:
             self.directionKey += 1
         
-        if key == arcade.key.SPACE:
-            self.playerSprite.shoot()
-            self.lasers = self.playerSprite.lasers
+        if key == arcade.key.SPACE and self.playerSprite.target:
+            self.lasers.append(self.playerSprite.shoot())
     
     def on_key_release(self, key, modifiers):
         '''
-        updates the direction key binary encoding
+        updates the direction key binary encoding and character shooting
         '''
         if key == arcade.key.UP:
             self.directionKey -= 8
@@ -220,6 +221,33 @@ class Game(arcade.Window):
             self.directionKey -= 2
         elif key == arcade.key.LEFT:
             self.directionKey -= 1
+        
+        if key == arcade.key.SPACE:
+            self.playerSprite.shootDirection = None
     
     def on_mouse_motion(self, x:float, y:float, dx:float, dy:float):
         pass
+    
+    def _manageLasers(self):
+        for laser in self.lasers:
+            points = (laser.center_x, laser.center_y), (laser.center_x + laser.change_x, laser.center_y + laser.change_y)
+            for wall in self.levels[self.currentLevel].noWalk:
+                if arcade.geometry.are_polygons_intersecting(points, wall.points):
+                    try:
+                        self.lasers.remove(laser)
+                        laser.owner.lasers.remove(laser)
+                    except:
+                        pass
+                    continue
+            for char in self.characterList:
+                if arcade.geometry.are_polygons_intersecting(points, char.points) and char != self.playerSprite:
+                    try:
+                        self.lasers.remove(laser)
+                        laser.owner.lasers.remove(laser)
+                    except:
+                        pass
+                    try:
+                        self.characterList.remove(char)
+                    except:
+                        pass
+        

@@ -13,7 +13,7 @@ class LaserBeam():
     length = 20
     width = 3
 
-    def __init__(self, x, y, targetX, targetY, color=arcade.color.RED):
+    def __init__(self, x, y, targetX, targetY, color=arcade.color.RED, owner=None):
         '''
         Constructor
         '''
@@ -24,6 +24,7 @@ class LaserBeam():
         self.change_x = (targetX - x)*self.speed/distance
         self.change_y = (targetY - y)*self.speed/distance
         self.color = color
+        self.owner = owner
     
     def update(self):
         self.center_x += self.change_x
