@@ -18,7 +18,7 @@ class Character(arcade.Sprite):
     N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
     isoXScale = 2 / 5**0.5
     isoYScale = 1 / 5**0.5
-    keyToDir = {0:None, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None} #fix later
+    keyToDir = {0:W, 1:NW, 2:NE, 3:N, 4:SW, 5:S, 6:E, 7:SE} #fix later
     
     def update(self):
         '''
@@ -98,9 +98,9 @@ class Character(arcade.Sprite):
         #manage turning toward target
         yDist = self.center_y - self.target.center_y
         xDist = self.center_x - self.target.center_x
-        above = yDist < 0
+        above = yDist > 0
         right = xDist < 0
-        iso = 1 < yDist / xDist < 1
+        iso = -1 < (yDist / xDist) < 1
         #binary (right)(above)(iso)
         key = 0
         if right:
