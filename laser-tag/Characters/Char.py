@@ -22,7 +22,7 @@ class Character(arcade.Sprite):
     
     def update(self):
         '''
-        duh
+        Update direction, image and placement
         '''
         self.change_x, self.change_y = 0, 0
         for laser in self.lasers:
