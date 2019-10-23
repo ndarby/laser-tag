@@ -9,6 +9,7 @@ from Maps.map import Map
 from Characters.Player import Player
 from Characters.NPC import spriteDistance
 from Maps.level import Level
+from PhysicsEngine import PhysicsEngine
 
 class Game(arcade.Window):
     '''
@@ -43,6 +44,7 @@ class Game(arcade.Window):
         self.currentLevel = 0
         self.levels = []
         self.characterList = None
+        self.enemyList = None
         
         self.leftPressed = False
         self.rightPressed = False
@@ -110,6 +112,7 @@ class Game(arcade.Window):
             self.playerSprite.center_y = self.levels[self.currentLevel].startUpY
         self.characterList = self.levels[self.currentLevel].characters
         self.characterList.append(self.playerSprite)
+        self.physicsEngine.characters = self.characterList
         
     def _scrollUpdate(self):
         '''

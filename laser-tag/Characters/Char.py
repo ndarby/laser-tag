@@ -65,6 +65,11 @@ class Character(arcade.Sprite):
             else:
                 self.set_texture(3*self.isoDirection + imgTypeIndex)
             
+            #self.center_x += self.change_x
+            #self.center_y += self.change_y
+        
+    
+
     def __init__(self, x, y, imgSrc):
         '''
         Constructor

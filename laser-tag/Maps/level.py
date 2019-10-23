@@ -41,7 +41,7 @@ class Level:
         if NPCstarts:
             for startSpot in NPCstarts:
                 self.characters.append(NPC(startSpot.center_x, startSpot.center_y, 'npc_imgs'))
-        
+                
     def draw(self):
         if self.downstairs:
             self.downstairs.draw()
