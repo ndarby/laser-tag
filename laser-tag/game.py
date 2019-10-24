@@ -77,7 +77,7 @@ class Game(arcade.Window):
         self.playerSprite = Player(startX, startY, 'player_imgs')
         self.characterList = self.levels[0].characters
         self.characterList.append(self.playerSprite)
-        self.physicsEngine = arcade.PhysicsEngineSimple(self.playerSprite, self.levels[self.currentLevel].noWalk)
+        self.physicsEngine = PhysicsEngine(self.characterList, self.levels[self.currentLevel].noWalk)
            
     def on_draw(self):
         '''

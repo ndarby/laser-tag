@@ -13,7 +13,7 @@ class Character(arcade.Sprite):
     '''
     #constants
     scaling = 1.3
-    movementSpeed = 1.2
+    movementSpeed = 2
     stepSpeed = 16
     N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
     isoXScale = 2 / 5**0.5
@@ -65,8 +65,8 @@ class Character(arcade.Sprite):
             else:
                 self.set_texture(3*self.isoDirection + imgTypeIndex)
             
-            self.center_x += self.change_x
-            self.center_y += self.change_y
+            #self.center_x += self.change_x
+            #self.center_y += self.change_y
         
     
 

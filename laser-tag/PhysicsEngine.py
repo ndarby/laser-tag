@@ -5,7 +5,6 @@ Created on Oct. 11, 2019
 '''
 
 from arcade.geometry import check_for_collision_with_list
-from arcade.sprite import Sprite
 from arcade.sprite_list import SpriteList
 
 class PhysicsEngine:
@@ -32,8 +31,7 @@ class PhysicsEngine:
             char.center_x += char.change_x
 
             # Check for wall hit
-            hit_list = \
-            check_for_collision_with_list(char, self.walls)
+            hit_list = check_for_collision_with_list(char, self.walls)
 
             # If we hit a wall, move so the edges are at the same point
             if len(hit_list) > 0:
@@ -50,8 +48,7 @@ class PhysicsEngine:
             char.center_y += char.change_y
     
             # Check for wall hit
-            hit_list = \
-                check_for_collision_with_list(char, self.walls)
+            hit_list = check_for_collision_with_list(char, self.walls)
     
             # If we hit a wall, move so the edges are at the same point
             if len(hit_list) > 0:
