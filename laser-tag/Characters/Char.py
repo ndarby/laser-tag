@@ -13,7 +13,7 @@ class Character(arcade.Sprite):
     '''
     #constants
     scaling = 1.3
-    movementSpeed = 2
+    movementSpeed = 2.5
     stepSpeed = 16
     N, NE, E, SE, S, SW, W, NW = 0, 1, 2, 3, 4, 5, 6, 7
     isoXScale = 2 / 5**0.5
