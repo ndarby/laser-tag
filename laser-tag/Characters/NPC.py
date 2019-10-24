@@ -18,7 +18,7 @@ class NPC(Character):
     
     def __init__(self, x, y, imgSrc):
         super().__init__(x, y, imgSrc)
-        self.leader = None
+        self.leader = None  #fix leader to enable follow method
         self.obstructed = False
         self.isoDirection = self.N
         self.walkCount = 0
@@ -48,5 +48,14 @@ class NPC(Character):
                 
     
     def follow(self):
-        pass
+        if(self.center_x < self.leader.center_x):
+            self.change_x = 1
+        else:
+            self.change_x = -1
+        
+        if(self.center_y < self.leader.center_y):
+            self.change_y = 1
+        else:
+            self.change_y = -1
+            
     
