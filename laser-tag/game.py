@@ -165,6 +165,7 @@ class Game(arcade.Window):
         self.characterList.update()
         self.physicsEngine.update()
         self._manageLasers()
+        self.levels[self.currentLevel].update()
               
         # Check stairs
         if self.levels[self.currentLevel].upstairs:

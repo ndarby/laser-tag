@@ -4,9 +4,13 @@ Created on Sep. 27, 2019
 @author: spencercomin
 '''
 import arcade
+import random
 from Characters.NPC import NPC
 
 class Level:
+    
+    #constants
+    respawnPeriod = 400
     
     def __init__(self):
         self.upstairs = None
@@ -20,6 +24,8 @@ class Level:
         self.startDownX = None
         self.startDownY = None
         self.characters = None
+        self.spawnLocations = []
+        self.updateCount = 0
     
     def load(self, mapSpriteLists, levelNumber):
         self.floor = mapSpriteLists.get(f'Floor{levelNumber}')
@@ -41,6 +47,7 @@ class Level:
         if NPCstarts:
             for startSpot in NPCstarts:
                 self.characters.append(NPC(startSpot.center_x, startSpot.center_y, 'npc_imgs'))
+                self.spawnLocations.append((startSpot.center_x, startSpot.center_y))
                 
     def draw(self):
         if self.downstairs:
@@ -53,4 +60,18 @@ class Level:
             self.furniture.draw()
     
     def update(self):
-        pass
+        self.updateCount += 1
+        if self.updateCount == self.respawnPeriod:
+            self.updateCount = 0
+            if len(self.characters) <= len(self.spawnLocations):
+                respawnCands = self.spawnLocations.copy()
+                for char in self.characters:
+                    try:
+                        if char.birthplace in respawnCands:
+                            respawnCands.remove(char.birthplace)
+                    except:
+                        continue
+                i = random.randint(0, len(respawnCands)-1)
+                self.characters.append(NPC(*respawnCands[i], 'npc_imgs'))
+                del respawnCands
+                    

@@ -23,6 +23,7 @@ class NPC(Character):
         self.isoDirection = self.N
         self.walkCount = 0
         self.moving = True
+        self.birthplace = (x, y)
         
     
     def update(self):
