@@ -37,8 +37,8 @@ class Game(arcade.Window):
         super().__init__(width, height, title, fullscreen=fullScreen)
         self.mapList = None
         #change later
-        self.mapList = [Map('map1.tmx')]
         self.playerSprite = None
+        self.mapList = [Map('map1.tmx')]
         
         self.currentMap = None
         self.currentLevel = 0
