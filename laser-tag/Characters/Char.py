@@ -97,7 +97,7 @@ class Character(arcade.Sprite):
         also turns to face target.
         Should not be called if there is no target.
         '''
-        laser = LaserBeam(self.center_x, self.center_y, self.target.center_x, self.target.center_y, arcade.color.RED, self)
+        laser = LaserBeam(self.center_x, self.center_y+self.height/3, self.target.center_x, self.target.center_y, arcade.color.RED, self)
         self.lasers.append(laser)
         
         #manage turning toward target
