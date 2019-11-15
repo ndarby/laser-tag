@@ -10,3 +10,7 @@ class Player(Character):
     classdocs
     '''
     pass
+
+    def __init__(self, x, y, imgSrc):
+        super().__init__(x, y, imgSrc)
+        self.score = 0;

@@ -10,6 +10,7 @@ from Characters.Player import Player
 from Characters.NPC import spriteDistance
 from Maps.level import Level
 from PhysicsEngine import PhysicsEngine
+from StatsScreen import StatsScreen
 
 class Game(arcade.Window):
     '''
@@ -58,6 +59,9 @@ class Game(arcade.Window):
         self.viewLeft, self.viewBottom = 0, 0
         self.lasers = []
         
+        self.score = 0
+        self.stats = StatsScreen(self)
+        
         arcade.set_background_color(self.background)        
         
     def setup(self):
@@ -78,6 +82,8 @@ class Game(arcade.Window):
         self.characterList = self.levels[0].characters
         self.characterList.append(self.playerSprite)
         self.physicsEngine = PhysicsEngine(self.characterList, self.levels[self.currentLevel].noWalk)
+        self.score = self.playerSprite.score
+        self.set_mouse_visible(False)
            
     def on_draw(self):
         '''
@@ -90,6 +96,7 @@ class Game(arcade.Window):
         self.characterList.draw()
         if self.playerSprite.target:
             arcade.draw_circle_outline(self.playerSprite.target.center_x, self.playerSprite.target.center_y, 35, arcade.color.LIME_GREEN, 4)
+        self.stats.draw()
             
     def _changeLevel(self, dLevel):
         '''
@@ -154,7 +161,7 @@ class Game(arcade.Window):
         '''
         updates the character list, physics engine, and checks for going up or down stairs
         '''
-        self._scrollUpdate()        
+        self._scrollUpdate()       
         self.playerSprite.isoDirection = self.keyToDir[self.directionKey]
         if self.directionKey == 0:
             self.playerSprite.moving = False
@@ -252,6 +259,7 @@ class Game(arcade.Window):
                         pass
                     try:
                         self.characterList.remove(char)
+                        self.score += 1
                     except:
                         pass
         
