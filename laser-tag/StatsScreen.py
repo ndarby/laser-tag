@@ -5,6 +5,8 @@ Created on Nov. 9, 2019
 '''
 
 import arcade
+import time
+import datetime
 
 class StatsScreen(object):
     '''
@@ -17,10 +19,12 @@ class StatsScreen(object):
         Constructor
         '''
         self.game = game
+        self.startTime = time.time()
     
 #     def update(self):
 #         print(self.game.score)
     
     def draw(self):
-        arcade.draw_text(f'Score: {self.game.score}', self.game.viewLeft + 15, self.game.viewBottom + 15, arcade.color.WHITE, font_size=36)
-        print("stats drawing")
+        timePassed = int(time.time()-self.startTime)
+        arcade.draw_text(f'Score: {self.game.score}', self.game.viewLeft + 15, self.game.viewBottom + 60, arcade.color.WHITE, font_size=36)
+        arcade.draw_text(f'Time: {datetime.timedelta(seconds=timePassed)}', self.game.viewLeft + 15, self.game.viewBottom + 15, arcade.color.WHITE, font_size=36)
