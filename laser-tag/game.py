@@ -79,7 +79,11 @@ class Game(arcade.Window):
         startX = self.currentMap['StartBlock'].sprite_list[0].center_x
         startY = self.currentMap['StartBlock'].sprite_list[0].center_y
         self.playerSprite = Player(startX, startY, 'player_imgs')
+        self.playerSprite.laserPool = self.lasers
         self.characterList = self.levels[0].characters
+        for char in self.characterList:
+            char.target = self.playerSprite
+            char.laserPool = self.lasers
         self.characterList.append(self.playerSprite)
         self.physicsEngine = PhysicsEngine(self.characterList, self.levels[self.currentLevel].noWalk)
         self.score = self.playerSprite.score
@@ -118,6 +122,10 @@ class Game(arcade.Window):
             self.playerSprite.center_x = self.levels[self.currentLevel].startUpX
             self.playerSprite.center_y = self.levels[self.currentLevel].startUpY
         self.characterList = self.levels[self.currentLevel].characters
+        #target all NPCs to player
+        for char in self.characterList:
+            char.target = self.playerSprite
+            char.laserPool = self.lasers
         self.characterList.append(self.playerSprite)
         self.physicsEngine.characters = self.characterList
         
@@ -218,7 +226,7 @@ class Game(arcade.Window):
             self.directionKey += 1
         
         if key == arcade.key.SPACE and self.playerSprite.target:
-            self.lasers.append(self.playerSprite.shoot())
+            self.playerSprite.shoot()
     
     def on_key_release(self, key, modifiers):
         '''
@@ -251,7 +259,7 @@ class Game(arcade.Window):
                         pass
                     continue
             for char in self.characterList:
-                if arcade.geometry.are_polygons_intersecting(points, char.points) and char != self.playerSprite:
+                if arcade.geometry.are_polygons_intersecting(points, char.points) and char != laser.owner:
                     try:
                         self.lasers.remove(laser)
                         laser.owner.lasers.remove(laser)

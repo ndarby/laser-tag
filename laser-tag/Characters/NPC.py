@@ -12,9 +12,11 @@ class NPC(Character):
     '''
     classdocs
     '''
-    followDistance = 20
+    maxFollowDistance = 300
+    minFollowDistance = 50
     turn = 80
     movementSpeed = 1
+    shootCountMax = 50
     
     def __init__(self, x, y, imgSrc):
         super().__init__(x, y, imgSrc)
@@ -23,15 +25,17 @@ class NPC(Character):
         self.walkCount = 0
         self.moving = True
         self.birthplace = (x, y)
-        
+        self.shootCounter = self.shootCountMax
     
     def update(self):
-        if self.target and spriteDistance(self, self.target) > self.followDistance:
+        if self.target and self.minFollowDistance < spriteDistance(self, self.target) < self.maxFollowDistance:
             self.follow()
+            self.shootHandler()
         else:
             self.wander()            
 
         super().update()
+
     
     def wander(self):
         self.walkCount += 1
@@ -48,14 +52,20 @@ class NPC(Character):
                 
     
     def follow(self):
-        if(self.center_x < self.target.center_x):
-            self.change_x = 1
-        else:
-            self.change_x = -1
-        
-        if(self.center_y < self.target.center_y):
-            self.change_y = 1
-        else:
-            self.change_y = -1
-            
+        x = self.center_x - self.target.center_x
+        y = self.center_y - self.target.center_y
+        if x < 0 and y < 0:
+            self.isoDirection = self.E
+        elif x < 0 and y > 0:
+            self.isoDirection = self.S
+        elif x > 0 and y < 0:
+            self.isoDirection = self.N
+        elif x > 0 and y > 0:
+            self.isoDirection = self.W
+        self.shootCounter -= 1
+    
+    def shootHandler(self):           
+        if self.shootCounter <= 0:
+            self.shoot()
+            self.shootCounter = self.shootCountMax
     

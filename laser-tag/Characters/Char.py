@@ -89,6 +89,7 @@ class Character(arcade.Sprite):
         self.movUpdateCount = 0
         self.shootDirection = None
         self.lasers = []
+        self.laserPool = None
         self.target = None
     
     def shoot(self):
@@ -117,5 +118,5 @@ class Character(arcade.Sprite):
         
         self.shootDirection = self.keyToDir[key]
         
-        return laser
+        self.laserPool.append(laser)
         
