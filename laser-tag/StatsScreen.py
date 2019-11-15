@@ -22,5 +22,5 @@ class StatsScreen(object):
 #         print(self.game.score)
     
     def draw(self):
-        arcade.draw_text(f'Score: {self.game.score}', 15, 15, arcade.color.WHITE)
+        arcade.draw_text(f'Score: {self.game.score}', self.game.viewLeft + 15, self.game.viewBottom + 15, arcade.color.WHITE, font_size=36)
         print("stats drawing")
