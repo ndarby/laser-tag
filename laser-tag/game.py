@@ -268,8 +268,8 @@ class Game(arcade.Window):
                     try:
                         self.characterList.remove(char)
                         if char is self.playerSprite:
-                            arcade.draw_text('game over', 720, 450, arcade.color.WHITE, font_size=50)
-                            arcade.pause(2)
+                            arcade.draw_text('game over', self.viewLeft + self.width/2, self.viewBottom + self.height/2, arcade.color.WHITE, font_size=50)
+                            arcade.pause(3)
                             self.close()
                         self.score += 1
                     except:
