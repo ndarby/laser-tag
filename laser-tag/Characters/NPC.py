@@ -16,7 +16,7 @@ class NPC(Character):
     minFollowDistance = 50
     turn = 80
     movementSpeed = 1
-    shootCountMax = 50
+    shootCountMax = 30
     
     def __init__(self, x, y, imgSrc):
         super().__init__(x, y, imgSrc)
